@@ -1,0 +1,7 @@
+{% extends "main/home.html" %}
+
+{% block constantcontent %}
+    {% for question in user.questions.all %}
+        <p>{{ question.title }}</p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,208 @@
+{% extends "main/home.html" %}
+{% load format_answer_url %}
+
+{% block constantcontent %}
+    <html>
+        <head>
+            <style>
+                h5
+                {
+                    margin:0px;
+                    font-size:1.4em;
+                    font-weight:700;
+                }
+
+                p
+                {
+                    font-size:13px;
+                }
+
+                /* .center
+                {
+                    height:100vh;
+                    width:100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: left;
+                } */
+
+                /* End Non-Essential  */
+                .card
+                {
+                    padding:1em;
+                    background-color: #7FC6A4;
+                    border-color: #7FC6A4;
+                }
+                .property-card
+                {
+                    height:18em;
+                    width:14em;
+                    display:-webkit-box;
+                    display:-ms-flexbox;
+                    display:flex;
+                    -webkit-box-orient:vertical;
+                    -webkit-box-direction:normal;
+                    -ms-flex-direction:column;
+                    flex-direction:column;
+                    position:relative;
+                    -webkit-transition:all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+                    -o-transition:all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+                    transition:all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+                    border-radius:16px;
+                    overflow:hidden;
+                    /* -webkit-box-shadow:  15px 15px 27px #e1e1e3, -15px -15px 27px #ffffff; */
+                    box-shadow:  3px 3px 3px #bec2be, -1px -1px 1px #bec2be;
+                }
+
+                .property-description
+                {
+                    background-color: #FAFAFC;
+                    height:16em;
+                    width:14em;
+                    position:absolute;
+                    bottom:2em;
+                    -webkit-transition:all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+                    -o-transition:all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+                    transition:all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+                    padding: 0.5em 1em;
+                    text-align:center;
+                    overflow:hidden;
+                }   
+                
+                .property-seperator
+                {
+                    background-color: #FAFAFC;
+                    height:3.5em;
+                    width:14em;
+                    position:absolute;
+                    bottom:2em;
+                    padding: 0.5em 1em;
+                    text-align:center;
+                }
+                .blackbar
+                {
+                    background-color: #888888;
+                    height:3.6em;
+                    width:14em;
+                    position:absolute;
+                    bottom:2em;
+                    padding: 0.5em 1em;
+                    text-align:center;
+                }
+
+                .property-bottom
+                {
+                    background-color: #FAFAFC;
+                    height:2em;
+                    width:14em;
+                    position:absolute;
+                    bottom:-1em;
+                    left:-0em;
+                    -webkit-transition:all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+                    -o-transition:all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+                    transition:all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+                    padding: 0.5em 1em;
+                    text-align:center;
+                    border-radius:16px;
+                }
+                .questiondate {
+                    position:absolute;
+                    bottom:1.6em;
+                    left:2.7em;
+                    text-align: center;
+                    
+                }
+
+                a.answer-button {
+                    background-color: #5D737E; /* Green */
+                    border: none;
+                    color: white;
+                    position:absolute;
+                    left:-0.2em;
+                    bottom:-0.2em;
+                    padding: 7px 20px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 12px;
+                    margin: 2px 2px;
+                    cursor: pointer;
+                    border-radius:16px;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                }
+                a.same-button {
+                    background-color: #5D737E; /* Green */
+                    border: none;
+                    color: white;
+                    position:absolute;
+                    right:-0.2em;
+                    bottom:-0.2em;
+                    padding: 7px 20px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 12px;
+                    margin: 2px 2px;
+                    cursor: pointer;
+                    border-radius:16px;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                }
+
+                a.answer-button:hover {
+                    background: rgb(178, 201, 171);
+                    -webkit-transition: background 0.3s ease-in-out;
+                    -moz-transition: background 0.3s ease-in-out;
+                    transition: background-color 0.3s ease-in-out;
+                }
+
+                a.same-button:hover {
+                    background: rgb(178, 201, 171);
+                    -webkit-transition: background 0.3s ease-in-out;
+                    -moz-transition: background 0.3s ease-in-out;
+                    transition: background-color 0.3s ease-in-out;
+                }
+
+                a.same-button2 {background-color: #fa5c4d;}
+
+            </style>
+            <body>
+                <table>
+                    {% for row in cards %}
+                        <tr>
+                            {% for question in row %}
+                                <td>
+                                    <div class = 'card'>
+                                        <div class="property-card">
+                                            <div class="property-description">
+                                            <h5>{{ question.title }}</h5>
+                                            <p>{{ question.body }}</p>
+                                            </div>
+                                        </div>
+                                        <div class = 'blackbar'></div>
+                                        <div class = "property-seperator">
+                                            <div class="property-bottom">
+                                                <a href='/answer/{{question.id}}' class="answer-button">Answer</a>
+                                                {% if user.is_authenticated %}
+                                                    {% if question in user.questions.all %}
+                                                        <a href='/removequestion/{{question.id}}' class="same-button same-button2">Un-Vote</a>
+                                                    {% else %}
+                                                        <a href='/addquestion/{{question.id}}' class="same-button">Vote</a>
+                                                    {% endif %}
+                                                {% endif %}
+                                                <p>{{question.score}}</p>
+                                                <div class='questiondate'>
+                                                    <p>{{question.creation_date}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </body>
+        </head>
+    </html>
+{% endblock %}
+
